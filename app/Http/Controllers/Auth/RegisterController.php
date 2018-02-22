@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Requests\RegisterRequesr;
 
 class RegisterController extends Controller
 {
@@ -46,27 +47,29 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator($requst )
     {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
+        return Validator::make($requst , [
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed',
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array  $requst 
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function create( RegisterRequesr $requst )
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'first_name' => $requst ['first_name'],
+            'last_name' => $requst ['last_name'],
+            'email' => $requst ['email'],
+            'password' => Hash::make($requst ['password']),
         ]);
     }
 }
