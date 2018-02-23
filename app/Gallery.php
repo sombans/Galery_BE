@@ -17,11 +17,16 @@ class Gallery extends Model
         ];
 
     public function user() {
-    	return $this->belongsTo(User::class);
+    	return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
     public function images() {
-    	return $this->hasMany(Image::class);
+    	return $this->hasMany('App\Image');
     }
+    public static function getSingleGallery($id){
+           	   return self::with('user')->with(['images'], function ($q) {
+           		return $q->whereNotNull('url')->orderBy('id', 'asc');
+           	})->find($id);
+           }  
 
 }

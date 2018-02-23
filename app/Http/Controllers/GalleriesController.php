@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-
-class GaleryTabeSeeders extends Controller
+use App\Gallery;
+class GalleriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,7 @@ class GaleryTabeSeeders extends Controller
      */
     public function index()
     {
-        $galleries = Gallery::all();
-        return view('galleries.index', compact('galleries'));
+        return Gallery::with(['user', 'images'])->paginate(10);
     }
 
     /**
@@ -47,7 +45,7 @@ class GaleryTabeSeeders extends Controller
      */
     public function show($id)
     {
-        //
+        return Gallery::getSingleGallery($id);
     }
 
     /**

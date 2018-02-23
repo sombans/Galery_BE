@@ -8,6 +8,7 @@ class Image extends Model
 {
 
     public function gallery() {
-    	return $this->belongsTo(Gallery::class);
+        
+    	return $this->belongsTo('App\Gallery', 'gallery_id', 'id');
     }
 }

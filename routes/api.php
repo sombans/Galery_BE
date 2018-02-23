@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,3 +13,6 @@ use Illuminate\Http\Request;
 */
 Route::post('/login', 'Auth\LoginController@authenticate');
 Route::post('/register', 'Auth\RegisterController@create');
+
+Route::middleware('jwt')->get('/all-galleries', '\App\Http\Controllers\GalleriesController@index');
+Route::middleware('jwt')->get('/gallerie/{id}','\App\Http\Controllers\GalleriesController@show');
